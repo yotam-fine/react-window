@@ -92,6 +92,60 @@ npm install --save react-window
 
 Learn more at [react-window.now.sh](https://react-window.now.sh/):
 
+## ModalFixedSizeList Component
+
+The `ModalFixedSizeList` component is a wrapper around the `FixedSizeList` that renders it inside a modal using `react-modal`. This is useful for displaying lists in a modal dialog.
+
+### Props
+
+- `isOpen` (boolean): Controls the visibility of the modal.
+- `onRequestClose` (function): Callback function called when the modal is requested to be closed.
+- `listHeight` (number): Height of the list inside the modal.
+- `listWidth` (number): Width of the list inside the modal.
+- `itemCount` (number): Total number of items in the list.
+- `itemSize` (number): Size of each item in the list.
+- `itemData` (any): Data to be passed to each item in the list.
+- `modalStyles` (object): Custom styles for the modal.
+
+### Example
+
+```jsx
+import React, { useState } from 'react';
+import ModalFixedSizeList from './src/ModalFixedSizeList';
+
+function App() {
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const toggleModal = () => setModalOpen(!isModalOpen);
+
+  return (
+    <div>
+      <button onClick={toggleModal}>Toggle Modal</button>
+      <ModalFixedSizeList
+        isOpen={isModalOpen}
+        onRequestClose={toggleModal}
+        listHeight={300}
+        listWidth={300}
+        itemCount={1000}
+        itemSize={35}
+        itemData={Array.from({ length: 1000 }, (_, index) => `Item ${index}`)}
+        modalStyles={{
+          content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)',
+          },
+        }}
+      />
+    </div>
+  );
+}
+
+export default App;
+
 ## Related libraries
 
 * [`react-virtualized-auto-sizer`](https://npmjs.com/package/react-virtualized-auto-sizer): HOC that grows to fit all of the available space and passes the width and height values to its child.
@@ -169,3 +223,4 @@ Yes, although it requires a small amount of user code. Here's a [Code Sandbox de
 ## License
 
 MIT © [bvaughn](https://github.com/bvaughn)
+

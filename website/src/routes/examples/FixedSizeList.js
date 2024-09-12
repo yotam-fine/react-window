@@ -1,5 +1,6 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, useState } from 'react';
 import { FixedSizeList } from 'react-window';
+import ModalFixedSizeList from '../../../src/ModalFixedSizeList';
 import CodeBlock from '../../components/CodeBlock';
 import ProfiledExample from '../../components/ProfiledExample';
 
@@ -68,6 +69,50 @@ export default function() {
           <CodeBlock value={CODE_HORIZONTAL} />
         </div>
       </div>
+      </div>
+      <div className={styles.Example}>
+        <ProfiledExample
+          className={styles.ExampleDemo}
+          sandbox="modal-fixed-size-list"
+        >
+          <ModalExample />
+        </ProfiledExample>
+        <div className={styles.ExampleCode}>
+          <CodeBlock value={`// Example code for ModalFixedSizeList`} />
+        </div>
+      </div>
     </div>
   );
 }
+
+function ModalExample() {
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const toggleModal = () => setModalOpen(!isModalOpen);
+
+  return (
+    <div>
+      <button onClick={toggleModal}>Toggle Modal</button>
+      <ModalFixedSizeList
+        isOpen={isModalOpen}
+        onRequestClose={toggleModal}
+        listHeight={300}
+        listWidth={300}
+        itemCount={1000}
+        itemSize={35}
+        itemData={Array.from({ length: 1000 }, (_, index) => `Item ${index}`)}
+        modalStyles={{
+          content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)',
+          },
+        }}
+      />
+    </div>
+  );
+}
+
