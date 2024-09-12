@@ -88,6 +88,52 @@ yarn add react-window
 npm install --save react-window
 ```
 
+## ModalFixedSizeList
+
+The `ModalFixedSizeList` component is a wrapper around the `FixedSizeList` that renders it inside a modal. This is useful for displaying large lists in a modal dialog.
+
+### Props
+
+- `isOpen` (boolean): Controls whether the modal is open or closed.
+- `onRequestClose` (function): Callback function called when the modal requests to be closed.
+- `modalProps` (object): Additional props to pass to the `react-modal` component.
+- `listProps` (object): Props to pass to the `FixedSizeList` component.
+
+### Example
+
+```jsx
+import React, { useState } from 'react';
+import ModalFixedSizeList from './src/ModalFixedSizeList';
+
+function App() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleModal = () => setIsOpen(!isOpen);
+
+  return (
+    <div>
+      <button onClick={toggleModal}>Toggle Modal</button>
+      <ModalFixedSizeList
+        isOpen={isOpen}
+        onRequestClose={toggleModal}
+        modalProps={{ contentLabel: 'List Modal' }}
+        listProps={{
+          height: 300,
+          itemCount: 1000,
+          itemSize: 35,
+          width: 300,
+          children: ({ index, style }) => (
+            <div style={style}>Row {index}</div>
+          ),
+        }}
+      />
+    </div>
+  );
+}
+
+export default App;
+```
+
 ## Usage
 
 Learn more at [react-window.now.sh](https://react-window.now.sh/):
@@ -169,3 +215,4 @@ Yes, although it requires a small amount of user code. Here's a [Code Sandbox de
 ## License
 
 MIT © [bvaughn](https://github.com/bvaughn)
+
